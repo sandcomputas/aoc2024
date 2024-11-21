@@ -4,9 +4,10 @@ import dev.sondre.day1.Part1
 
 
 fun main() {
-    // TODO: make it easier to switch between test and actual
-    val p1t = Part1().test()
+    val p1 = Part1()
+    val p2 = Part2()
 
-    val p1 = Part1().result()
-    println(p1)
+    p1.test()
+    p1.actual()
+    print(p1)
 }

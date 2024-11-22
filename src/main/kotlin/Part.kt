@@ -75,7 +75,7 @@ abstract class Part {
         return d.toString().toInt()
     }
 
-    private fun part(): Int {
+    fun part(): Int {
         val part = className().split(".")[3]
         return if (part.length == 6) (part.substring(4, 5).toInt())
         else (part[4].toString().toInt())

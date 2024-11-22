@@ -15,14 +15,14 @@ class Runner(
         result = performance.measure(data, function)
     }
 
-    fun metrics(): String {
-        return "${env.name} run took ${performance.timeToRun()}"
+    private fun metrics(): Int {
+        return performance.timeToRun()
     }
 
     override fun toString(): String {
         val r = if (result == DEFAULT_RESULT) "Not calculated" else result
         return """
-            |--> ${env.name}: $r
+            |--> ${env.name}: $r (${metrics()} ms)
         """.trimMargin()
     }
 }
@@ -69,10 +69,9 @@ abstract class Part {
 
     private fun className() = this::class.java.name
 
-    private fun day(): Int {
+    private fun day(): String {
         val dayString = className().split(".")[2]
-        val d = if (dayString[3] == '0') dayString[4] else dayString.substring(3, 5)
-        return d.toString().toInt()
+        return dayString.substring(3, 5)
     }
 
     fun part(): Int {

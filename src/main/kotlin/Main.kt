@@ -6,7 +6,7 @@ import kotlin.io.path.Path
 
 fun main() {
     println("Working on creating a new day's environment... 🛠️")
-    newDay(10)
+    newDay(1)
     println("""
         🎅 A new day, a new Advent of Code Challenge! 🎅
         

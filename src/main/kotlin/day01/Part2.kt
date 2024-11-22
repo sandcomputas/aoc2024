@@ -4,6 +4,6 @@ import dev.sondre.Part
 
 class Part2 : Part() {
     override fun calc(data: String): Int {
-        return 43
+        return 42
     }
-}
+}            

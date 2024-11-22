@@ -4,7 +4,11 @@ import dev.sondre.Part
 
 class Part1 : Part() {
     override fun calc(data: String): Int {
-        Thread.sleep(1000)
+        val l = mutableListOf(1)
+        for (i in 1..100_000) {
+            l.add(i * 100)
+        }
+        l.forEach { println(it) }
         return 42
     }
-}
+}            

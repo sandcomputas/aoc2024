@@ -1,14 +1,9 @@
 package dev.sondre.day01
 
-import dev.sondre.day1.Part1
+import dev.sondre.Day
 
 
 fun main() {
-    val p1 = Part1()
-    val p2 = Part2()
-
-    p1.test()
-    p1.actual()
-    p1.run()
-    println(p1)
+    val day = Day(listOf(Part1(), Part2()))
+    day.all()
 }

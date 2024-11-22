@@ -1,8 +1,8 @@
 package dev.sondre.day02
 
-import dev.sondre.Day
+import dev.sondre.Part
 
-class Part1: Day() {
+class Part1: Part() {
     override fun calc(data: String): Int {
         TODO("Not yet implemented")
     }

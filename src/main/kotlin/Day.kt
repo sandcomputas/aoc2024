@@ -2,19 +2,44 @@ package dev.sondre
 
 import java.io.FileNotFoundException
 
-// TODO: add timing metrics
+const val DEFAULT_RESULT = -1
 
-data class Result(
-    var test: Int = -1,
-    var actual: Int = -1
+class Runner(
+    private val env: Env,
+    private val performance: PerformanceMonitor,
+    private val data: String,
+    private val function: (d: String) -> Int,
+    private var result: Int = DEFAULT_RESULT
 ) {
+    fun run() {
+        result = performance.measure(data, function)
+    }
+
+    fun metrics(): String {
+        return "${env.name} run took ${performance.timeToRun()}"
+    }
+
     override fun toString(): String {
-        val t = if (test == -1) "Not calculated" else test
-        val a = if (actual == -1) "Not calculated" else actual
+        val r = if (result == DEFAULT_RESULT) "Not calculated" else result
         return """
-            |--> Test: $t
-            |--> Actual: $a
+            |--> ${env.name}: $r
         """.trimMargin()
+    }
+}
+
+class PerformanceMonitor {
+    private var startTime: Long = 0
+    private var endTime: Long = Long.MAX_VALUE
+
+    fun measure(data: String, f: (data: String) -> Int): Int {
+        startTime = System.currentTimeMillis()
+        val r = f(data)
+        endTime = System.currentTimeMillis()
+        return r
+    }
+
+    fun timeToRun(): Int {
+        return (endTime - startTime).toInt()
     }
 }
 
@@ -23,7 +48,7 @@ enum class Env {
 }
 
 abstract class Day {
-    private val result = Result()
+    private val runners: MutableList<Runner> = mutableListOf()
 
     private fun data(env: Env): String {
         return readFile(filePath(env))
@@ -60,18 +85,25 @@ abstract class Day {
     abstract fun calc(data: String): Int
 
     fun test() {
-        result.test = calc(data(Env.TEST))
+        val runner = Runner(Env.TEST, PerformanceMonitor(), data(Env.TEST), ::calc)
+        runners.add(runner)
     }
 
     fun actual() {
-        result.actual = calc(data(Env.ACTUAL))
+        val runner = Runner(Env.ACTUAL, PerformanceMonitor(), data(Env.ACTUAL), ::calc)
+        runners.add(runner)
+    }
+
+    fun run() {
+        runners.forEach { it.run() }
     }
 
     override fun toString(): String {
+        val results = runners.joinToString("\n") { it.toString() }
         return """
-            |##### Day ${day()} #####
-            |$result 
-            |#################
+            |####### Day ${day()} (part ${part()}) #######
+            |$results
+            |##############################
         """.trimMargin()
     }
 }

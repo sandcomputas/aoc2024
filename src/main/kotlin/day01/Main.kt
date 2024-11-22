@@ -9,5 +9,6 @@ fun main() {
 
     p1.test()
     p1.actual()
-    print(p1)
+    p1.run()
+    println(p1)
 }

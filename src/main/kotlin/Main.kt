@@ -23,8 +23,7 @@ fun newDay(nr: Int) {
     val dayPath = "./src/main/kotlin/day$dayNr"
     val resourcePath = "./src/main/resources"
     val testd = F(File("$resourcePath/day${dayNr}test.txt"), "")
-    val p1d = F(File("$resourcePath/day${dayNr}part1.txt"), "")
-    val p2d = F(File("$resourcePath/day${dayNr}part2.txt"), "")
+    val d = F(File("$resourcePath/day${dayNr}.txt"), "")
 
     fun packageExists(): Boolean {
         return Files.exists(Path(dayPath))
@@ -70,7 +69,7 @@ fun newDay(nr: Int) {
         """.trimIndent()
     )
 
-    listOf(m, p1, p2, testd, p1d, p2d).forEach {
+    listOf(m, p1, p2, testd, d).forEach {
         it.file.parentFile.mkdirs()
         it.file.createNewFile()
         val w = it.file.writer()

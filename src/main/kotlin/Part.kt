@@ -56,10 +56,9 @@ abstract class Part {
 
     private fun filePath(env: Env): String {
         val day = day()
-        val part = part()
         return when (env) {
             Env.TEST -> "/day${day}test.txt"
-            Env.ACTUAL -> "/day${day}part$part.txt"
+            Env.ACTUAL -> "/day${day}.txt"
         }
     }
 
@@ -72,7 +71,7 @@ abstract class Part {
 
     private fun day(): Int {
         val dayString = className().split(".")[2]
-        val d = if (dayString[3] == '0') dayString[4] else dayString.substring(3, 4)
+        val d = if (dayString[3] == '0') dayString[4] else dayString.substring(3, 5)
         return d.toString().toInt()
     }
 

@@ -11,4 +11,4 @@ class Part1 : Part() {
         l.forEach { println(it) }
         return 42
     }
-}            
+}

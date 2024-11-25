@@ -39,7 +39,7 @@ fun newDay(nr: Int) {
             import dev.sondre.Day
 
             fun main() {
-                val day = Day(listOf(Part1(), Part2()))
+                val day = Day(listOf(Part1(42), Part2(42)))
                 day.all()
             }    
         """.trimIndent()
@@ -50,7 +50,7 @@ fun newDay(nr: Int) {
 
             import dev.sondre.Part
             
-            class Part1 : Part() {
+            class Part1(expRes: Int? = null) : Part(expRes) {
                 override fun calc(data: String): Int {
                     return 42
                 }
@@ -63,7 +63,7 @@ fun newDay(nr: Int) {
 
             import dev.sondre.Part
             
-            class Part2 : Part() {
+            class Part2(expRes: Int? = null) : Part(expRes) {
                 override fun calc(data: String): Int {
                     return 42
                 }

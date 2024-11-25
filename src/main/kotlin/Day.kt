@@ -1,6 +1,6 @@
 package dev.sondre
 
-enum class PartEnum(val i: Int) {
+enum class PartEnum(val p: Int) {
     ONE(1), TWO(2), ALL(3)
 }
 
@@ -12,21 +12,19 @@ class Day(
     }
 
     fun part(part: PartEnum, env: Env? = null) {
-        val partsToRun = if (part == PartEnum.ALL) parts else parts.filter { it.part() == part.i }
+        val partsToRun = if (part == PartEnum.ALL) parts else parts.filter { it.part() == part.p }
         partsToRun.forEach { runAndPrint(it, env) }
     }
 
     private fun runAndPrint(part: Part, env: Env? = null) {
-        val envs: MutableList<() -> Unit> = mutableListOf()
         when (env) {
-            Env.TEST -> envs.add(part::test)
-            Env.ACTUAL -> envs.add(part::actual)
+            Env.TEST -> part.test()
+            Env.ACTUAL -> part.actual()
             null -> {
-                envs.add(part::test)
-                envs.add(part::actual)
+                part.test()
+                part.actual()
             }
         }
-        envs.forEach { it.invoke() }
         part.run()
         println(part)
     }

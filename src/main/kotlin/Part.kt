@@ -9,8 +9,10 @@ class Runner(
     private val performance: PerformanceMonitor,
     private val data: String,
     private val function: (d: String) -> Int,
-    private var result: Int = DEFAULT_RESULT
+    private val expected: Int? = null
 ) {
+    private var result: Int = DEFAULT_RESULT
+
     fun run() {
         result = performance.measure(data, function)
     }
@@ -19,10 +21,16 @@ class Runner(
         return performance.timeToRun()
     }
 
+    private fun expectationTest(): String {
+        if (expected == null || result == DEFAULT_RESULT) return ""
+        val prefix = "| "
+        return if (expected == result) "$prefix ✅test passing✅" else "$prefix ❗️test fails❗️"
+    }
+
     override fun toString(): String {
         val r = if (result == DEFAULT_RESULT) "Not calculated" else result
         return """
-            |--> ${env.name}: $r (${metrics()} ms)
+            |--> ${env.name}: $r (${metrics()} ms) ${expectationTest()}
         """.trimMargin()
     }
 }
@@ -47,7 +55,7 @@ enum class Env {
     TEST, ACTUAL
 }
 
-abstract class Part {
+abstract class Part(private val expectedTestResult: Int? = null) {
     private val runners: MutableList<Runner> = mutableListOf()
 
     private fun data(env: Env): String {
@@ -83,13 +91,11 @@ abstract class Part {
     abstract fun calc(data: String): Int
 
     fun test() {
-        val runner = Runner(Env.TEST, PerformanceMonitor(), data(Env.TEST), ::calc)
-        runners.add(runner)
+        runners.add(Runner(Env.TEST, PerformanceMonitor(), data(Env.TEST), ::calc, expectedTestResult))
     }
 
     fun actual() {
-        val runner = Runner(Env.ACTUAL, PerformanceMonitor(), data(Env.ACTUAL), ::calc)
-        runners.add(runner)
+        runners.add(Runner(Env.ACTUAL, PerformanceMonitor(), data(Env.ACTUAL), ::calc))
     }
 
     fun run() {

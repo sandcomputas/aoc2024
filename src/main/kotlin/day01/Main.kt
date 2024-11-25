@@ -5,7 +5,7 @@ import dev.sondre.Env
 import dev.sondre.PartEnum
 
 fun main() {
-    val day = Day(listOf(Part1(), Part2()))
-//    day.all()
-    day.part(PartEnum.ONE, Env.TEST)
+    val day = Day(listOf(Part1(42), Part2(42)))
+    day.all()
+//    day.part(PartEnum.ONE, Env.TEST)
 }

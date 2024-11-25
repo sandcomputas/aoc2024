@@ -5,8 +5,10 @@ import java.nio.file.Files
 import kotlin.io.path.Path
 
 fun main() {
-    println("Working on creating a new day's environment... 🛠️")
-    newDay(1)
+    print("What day are you starting to work on now? ")
+    val d = readln().toInt()
+    println("Alright, day $d it is!\nWorking on creating a new day's environment... 🛠️")
+    newDay(d)
     println("""
         🎅 A new day, a new Advent of Code Challenge! 🎅
         

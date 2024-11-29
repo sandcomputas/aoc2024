@@ -1,7 +1,6 @@
 package dev.sondre
 
 import java.io.FileNotFoundException
-import kotlin.math.exp
 
 const val DEFAULT_RESULT = -1
 
@@ -98,7 +97,8 @@ abstract class Part(private val expectedTestResult: Int? = null) {
     }
 
     fun test(inputData: String, expectedResult: Int): Part {
-        runners.add(Runner(Env.TEST, PerformanceMonitor(), inputData, ::calc, expectedResult))
+        val inpData = inputData.replace(", ", "\n")
+        runners.add(Runner(Env.TEST, PerformanceMonitor(), inpData, ::calc, expectedResult))
         return this
     }
 

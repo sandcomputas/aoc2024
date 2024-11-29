@@ -6,8 +6,9 @@ fun main() {
     val day = Day(
         listOf(
             Part1(4)
-                .test("1\n2", 2)
-                .test("1\n2", 20),
+                .test("+1, +1, +1", 3)
+                .test("+1, +1, -2", 0)
+                .test("-1, -2, -3", -6),
             Part2(10)
         )
     )

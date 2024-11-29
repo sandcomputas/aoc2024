@@ -1,6 +1,7 @@
 package dev.sondre
 
 import java.io.FileNotFoundException
+import kotlin.math.exp
 
 const val DEFAULT_RESULT = -1
 
@@ -29,8 +30,10 @@ class Runner(
 
     override fun toString(): String {
         val r = if (result == DEFAULT_RESULT) "Not calculated" else result
+        val inputData = if (env == Env.TEST) "(input: ${data.replace("\n", ",")})" else ""
+        val expectedResult = if (env == Env.TEST && expected != result) "(expected $expected)" else ""
         return """
-            |--> ${env.name}: $r (${metrics()} ms) ${expectationTest()}
+            |--> ${env.name}: $r (${metrics()} ms) ${expectationTest()} $inputData $expectedResult
         """.trimMargin()
     }
 }
@@ -92,6 +95,11 @@ abstract class Part(private val expectedTestResult: Int? = null) {
 
     fun test() {
         runners.add(Runner(Env.TEST, PerformanceMonitor(), data(Env.TEST), ::calc, expectedTestResult))
+    }
+
+    fun test(inputData: String, expectedResult: Int): Part {
+        runners.add(Runner(Env.TEST, PerformanceMonitor(), inputData, ::calc, expectedResult))
+        return this
     }
 
     fun actual() {

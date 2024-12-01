@@ -7,13 +7,12 @@ fun Pair<Int, Int>.distance(): Int {
 }
 
 fun readData(d: String): Pair<MutableList<Int>, MutableList<Int>> {
-    val l1 = mutableListOf<Int>()
-    val l2 = mutableListOf<Int>()
-
-    d.lines().forEach {
-        val row = it.split("""\s+""".toRegex())
-        l1.add(row.first().toInt())
-        l2.add(row.last().toInt())
-    }
-    return Pair(l1, l2)
+    val (l1, l2) = d
+        .lines()
+        .map {
+            val row = it.split("""\s+""".toRegex())
+            Pair(row.first().toInt(), row.last().toInt())
+        }
+        .unzip()
+    return Pair(l1.toMutableList(), l2.toMutableList())
 }

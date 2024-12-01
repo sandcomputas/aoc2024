@@ -1,11 +1,5 @@
 package dev.sondre.day01
 
-import kotlin.math.abs
-
-fun Pair<Int, Int>.distance(): Int {
-    return abs(this.first - this.second)
-}
-
 fun readData(d: String): Pair<MutableList<Int>, MutableList<Int>> {
     val (l1, l2) = d
         .lines()

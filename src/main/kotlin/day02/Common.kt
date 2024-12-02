@@ -2,6 +2,22 @@ package dev.sondre.day02
 
 import kotlin.math.abs
 
+fun List<Int>.decreasing(): Boolean {
+    return this.inOrder { prev, curr -> prev < curr }
+}
+
+fun List<Int>.increasing(): Boolean {
+    return this.inOrder { prev, curr -> prev > curr }
+}
+
+fun List<Int>.inOrder(predicate: (prev: Int, curr: Int) -> Boolean): Boolean {
+    for ((index, item) in this.withIndex()) {
+        if (index == 0 || index == this.size) continue
+        if (predicate(this[index - 1], item)) return false
+    }
+    return true
+}
+
 class Report(private val levels: List<Int>) {
 
     companion object {
@@ -30,24 +46,11 @@ class Report(private val levels: List<Int>) {
     }
 
     private fun allIncreasing(): Boolean {
-        return inOrder {curr, prev -> curr > prev }
+        return levels.increasing()
     }
 
     private fun allDescending(): Boolean {
-        return inOrder {curr, prev -> curr < prev }
-    }
-
-    private fun inOrder(predicate: (current: Int, prev: Int) -> Boolean): Boolean {
-        var prev: Int? = null
-        for (current in levels) {
-            if (prev == null) {
-                prev = current
-                continue
-            }
-            if (!predicate(current, prev)) return false
-            prev = current
-        }
-        return true
+        return levels.decreasing()
     }
 
     private fun adjacentLevelDiffInRange(): Boolean {

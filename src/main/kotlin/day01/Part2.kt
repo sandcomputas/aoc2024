@@ -7,7 +7,7 @@ fun List<Int>.count(n: Int): Int {
 }
 
 class Part2(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         val (l1, l2) = readData(data)
         return l1
             .sumOf {

@@ -51,7 +51,7 @@ fun newDay(nr: Int) {
             import dev.sondre.Part
             
             class Part1(expRes: Int? = null) : Part(expRes) {
-                override fun calc(data: String): Int {
+                override fun solve(data: String): Int {
                     return 42
                 }
             }            
@@ -64,7 +64,7 @@ fun newDay(nr: Int) {
             import dev.sondre.Part
             
             class Part2(expRes: Int? = null) : Part(expRes) {
-                override fun calc(data: String): Int {
+                override fun solve(data: String): Int {
                     return 42
                 }
             }            

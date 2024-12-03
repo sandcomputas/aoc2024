@@ -8,7 +8,7 @@ fun Pair<Int, Int>.distance(): Int {
 }
 
 class Part1(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         val (l1, l2) = readData(data)
         l1.sort()
         l2.sort()

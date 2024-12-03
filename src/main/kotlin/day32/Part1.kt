@@ -13,7 +13,7 @@ fun readLine1(data: String): List<Long> {
 }
 
 class Part1(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         val times = readLine1(data.lines().first())
         val distances = readLine1(data.lines().last())
 

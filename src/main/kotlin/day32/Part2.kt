@@ -12,7 +12,7 @@ fun readLine2(data: String): Long {
 }
 
 class Part2(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         val time = readLine2(data.lines().first())
         val distance = readLine2(data.lines().last())
         return Race.fromPair(Pair(time, distance)).numberOfWaysToWin()

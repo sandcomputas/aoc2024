@@ -56,7 +56,7 @@ class ConditionalParser(val program: String) {
 
 
 class Part2(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         return ConditionalParser(data).parse().sumOf { it.evaluate() }
     }
 }

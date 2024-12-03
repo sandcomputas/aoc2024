@@ -3,7 +3,7 @@ package dev.sondre.day30
 import dev.sondre.Part
 
 class Part2(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         val numbers = data.lines().map { it.toInt() }
         var current = 0
         val fqs = mutableMapOf(Pair(current, 1))

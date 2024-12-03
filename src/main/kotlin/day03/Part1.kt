@@ -13,7 +13,7 @@ class Parser(private val program: String) {
 }
 
 class Part1(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         val p = Parser(data)
         val expressions = p.parse()
         return expressions.sumOf { it.evaluate() }

@@ -3,7 +3,7 @@ package dev.sondre.day31
 import dev.sondre.Part
 
 class Part1(expRes: Int? = null) : Part(expRes) {
-    override fun calc(data: String): Int {
+    override fun solve(data: String): Int {
         var twoCount = 0
         var threeCount = 0
         data.lines()

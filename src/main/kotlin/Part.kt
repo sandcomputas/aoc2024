@@ -95,17 +95,17 @@ abstract class Part(private val expectedTestResult: Int? = null) {
         else (part[4].toString().toInt())
     }
 
-    abstract fun calc(data: String): Int
+    abstract fun solve(data: String): Int
 
     fun test() {
         if (hasExpectedResult()) {
-            runners.add(Runner(Env.TEST, PerformanceMonitor(), data(Env.TEST), ::calc, expectedTestResult))
+            runners.add(Runner(Env.TEST, PerformanceMonitor(), data(Env.TEST), ::solve, expectedTestResult))
         }
     }
 
     fun test(inputData: String, expectedResult: Int): Part {
         val inpData = inputData.replace(", ", "\n")
-        runners.add(Runner(Env.TEST, PerformanceMonitor(), inpData, ::calc, expectedResult))
+        runners.add(Runner(Env.TEST, PerformanceMonitor(), inpData, ::solve, expectedResult))
         return this
     }
 
@@ -115,7 +115,7 @@ abstract class Part(private val expectedTestResult: Int? = null) {
     }
 
     fun actual() {
-        runners.add(Runner(Env.ACTUAL, PerformanceMonitor(), data(Env.ACTUAL), ::calc, actualResult))
+        runners.add(Runner(Env.ACTUAL, PerformanceMonitor(), data(Env.ACTUAL), ::solve, actualResult))
     }
 
     fun run() {

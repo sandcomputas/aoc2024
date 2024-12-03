@@ -57,18 +57,6 @@ class ConditionalParser(val program: String) {
 
 class Part2(expRes: Int? = null) : Part(expRes) {
     override fun calc(data: String): Int {
-        val p = ConditionalParser(data)
-        val e = p.parse()
-        return e.sumOf { it.evaluate() }
+        return ConditionalParser(data).parse().sumOf { it.evaluate() }
     }
-}
-
-
-fun main() {
-    val expr = """.*mul\(\d+,\d+\).*""".toRegex()
-
-    val p = "xmul(2,4)"
-
-    val r = expr.containsMatchIn(p)
-    println(r)
 }

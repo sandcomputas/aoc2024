@@ -17,14 +17,14 @@ abstract class Letter(private val position: Position, private val grid: Grid) {
 
     abstract val value: Char
     abstract val nextValue: Char
-    fun left(): Letter? = grid[position.row, position.col - 1]
-    fun right(): Letter? = grid[position.row, position.col + 1]
-    fun top(): Letter? = grid[position.row - 1, position.col]
-    fun below(): Letter? = grid[position.row + 1, position.col]
-    fun northWest(): Letter? = grid[position.row - 1, position.col - 1]
-    fun northEast(): Letter? = grid[position.row - 1, position.col + 1]
-    fun southEast(): Letter? = grid[position.row + 1, position.col + 1]
-    fun southWest(): Letter? = grid[position.row + 1, position.col - 1]
+    private fun left(): Letter? = grid[position.row, position.col - 1]
+    private fun right(): Letter? = grid[position.row, position.col + 1]
+    private fun top(): Letter? = grid[position.row - 1, position.col]
+    private fun below(): Letter? = grid[position.row + 1, position.col]
+    private fun northWest(): Letter? = grid[position.row - 1, position.col - 1]
+    private fun northEast(): Letter? = grid[position.row - 1, position.col + 1]
+    private fun southEast(): Letter? = grid[position.row + 1, position.col + 1]
+    private fun southWest(): Letter? = grid[position.row + 1, position.col - 1]
     open fun count(): Int = 0
 
     open fun search(direction: Letter.() -> Letter?): Boolean { // Receiver function does the trick!
@@ -100,9 +100,7 @@ class Grid(raw: String) {
         }
     }
 
-    fun flat(): List<Letter> {
-        return grid.flatten()
-    }
+    fun flat(): List<Letter> = grid.flatten()
 }
 
 class Part1(expRes: Int? = null) : Part(expRes) {

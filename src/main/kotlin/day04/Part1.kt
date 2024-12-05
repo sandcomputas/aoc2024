@@ -2,30 +2,7 @@ package dev.sondre.day04
 
 import dev.sondre.Part
 
-abstract class Letter(private val position: Position, private val grid: Grid) {
-    companion object {
-        fun from(char: Char, position: Position, grid: Grid): Letter {
-            return when (char) {
-                'X' -> X(position, grid)
-                'M' -> M(position, grid)
-                'A' -> A(position, grid)
-                'S' -> S(position, grid)
-                else -> throw Exception("Illegal character")
-            }
-        }
-    }
-
-    abstract val value: Char
-    abstract val nextValue: Char
-    private fun left(): Letter? = grid[position.row, position.col - 1]
-    private fun right(): Letter? = grid[position.row, position.col + 1]
-    private fun top(): Letter? = grid[position.row - 1, position.col]
-    private fun below(): Letter? = grid[position.row + 1, position.col]
-    private fun northWest(): Letter? = grid[position.row - 1, position.col - 1]
-    private fun northEast(): Letter? = grid[position.row - 1, position.col + 1]
-    private fun southEast(): Letter? = grid[position.row + 1, position.col + 1]
-    private fun southWest(): Letter? = grid[position.row + 1, position.col - 1]
-    open fun count(): Int = 0
+abstract class Letter(position: Position, grid: Grid) : BaseLetter(position, grid){
 
     open fun search(direction: Letter.() -> Letter?): Boolean { // Receiver function does the trick!
         val d = this.direction()
@@ -87,7 +64,7 @@ class Grid(raw: String) {
         .mapIndexed { indexRow, row ->
             row.mapIndexed { indexColumn, char ->
                 val pos = Position(indexRow, indexColumn)
-                Letter.from(char, pos, this)
+                BaseLetter.from(char, pos, this)
             }
         }
 

@@ -2,36 +2,6 @@ package dev.sondre.day04
 
 import dev.sondre.Part
 
-class PuzzleBoard(private val raw: String) {
-    private val grid: List<List<Char>> = raw.lines().toList().map { it.toCharArray().toList() }
-
-    fun horizontal(): List<List<Char>> {
-        val leftToRight = grid
-        val rightToLeft = leftToRight.reversed()
-//        return leftToRight + rightToLeft // TODO: Tror ikke dette fungerer
-        return leftToRight
-    }
-
-    fun vertical(): List<List<Char>> {
-        val vertGrid = (0..grid.first().size).map { mutableListOf<Char>() }.toMutableList()
-        grid.forEachIndexed { indexRow, row ->
-            row.forEachIndexed { indewColumn, char ->
-                vertGrid[indewColumn].add(char)
-            }
-        }
-        return vertGrid
-    }
-
-    fun diagonal() {
-
-    }
-
-    fun search() {}
-}
-
-// ------ above is old
-
-
 abstract class Letter(private val position: Position, private val grid: Grid) {
     companion object {
         fun from(char: Char, position: Position, grid: Grid): Letter {
@@ -91,18 +61,6 @@ class X(position: Position, grid: Grid) : Letter(position, grid) {
         )
         return searches.map { it.invoke() }.count { it }
     }
-//
-//        val l1 = left()
-//        if (l1 != null && l1.value == 'M') {
-//            val l2 = l1.left()
-//            if (l2 != null && l2.value == 'A') {
-//                val l3 = l2.left()
-//                if (l3 != null && l3.value == 'S') {
-//                    return true
-//                }
-//            }
-//        }
-//        return false
 }
 
 class M(position: Position, grid: Grid) : Letter(position, grid) {
@@ -147,16 +105,8 @@ class Grid(raw: String) {
     }
 }
 
-
 class Part1(expRes: Int? = null) : Part(expRes) {
     override fun solve(data: String): Int {
-        /**
-         * Naiv løsning: for hver retning (hor, vert, diag) loop igjennom og
-         * let etter de fire bokstavene i ordet. Men bare plukk den hvis den ikke allerede er i listen
-         */
-
-        val sum = Grid(data).flat().sumOf { it.count() }
-
-        return sum
+        return Grid(data).flat().sumOf { it.count() }
     }
-}            
+}

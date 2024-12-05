@@ -7,10 +7,11 @@ import dev.sondre.PartEnum
 fun main() {
     val day = Day(
         listOf(
-            Part1(18),
+            Part1(18)
+                .withActual(2462),
 //            Part2(42)
         )
     )
-//    day.all()
-    day.part(PartEnum.ONE, Env.TEST)
+    day.all()
+//    day.part(PartEnum.ONE, Env.TEST)
 }

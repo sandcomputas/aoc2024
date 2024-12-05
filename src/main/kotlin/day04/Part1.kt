@@ -52,22 +52,44 @@ abstract class Letter(private val position: Position, private val grid: Grid) {
     fun top(): Letter? = grid[position.row - 1, position.col]
     fun below(): Letter? = grid[position.row + 1, position.col]
     fun northWest(): Letter? = grid[position.row - 1, position.col - 1]
+    fun northEast(): Letter? = grid[position.row - 1, position.col + 1]
     fun southEast(): Letter? = grid[position.row + 1, position.col + 1]
+    fun southWest(): Letter? = grid[position.row + 1, position.col - 1]
     open fun count(): Int = 0
-    open fun searchLeft(): Boolean {
-        val l = left()
-        if (l != null && l.value == nextValue) {
-            return l.searchLeft()
+
+    open fun search(direction: Letter.() -> Letter?): Boolean { // Receiver function does the trick!
+        val d = this.direction()
+        if (d != null && d.value == nextValue) {
+            return d.search(direction)
         }
         return false
     }
+
+    fun searchLeft(): Boolean = search { this.left() }
+    fun searchRight(): Boolean = search { this.right() }
+    fun searchTop(): Boolean = search { this.top() }
+    fun searchBelow(): Boolean = search { this.below() }
+    fun searchNorthWest(): Boolean = search { this.northWest() }
+    fun searchNorthEast(): Boolean = search { this.northEast() }
+    fun searchSouthEast(): Boolean = search { this.southEast() }
+    fun searchSouthWest(): Boolean = search { this.southWest() }
 }
 
 class X(position: Position, grid: Grid) : Letter(position, grid) {
     override val value = 'X'
     override val nextValue = 'M'
     override fun count(): Int {
-        return if (searchLeft()) 1 else 0
+        val searches = listOf(
+            ::searchLeft,
+            ::searchRight,
+            ::searchTop,
+            ::searchBelow,
+            ::searchNorthWest,
+            ::searchNorthEast,
+            ::searchSouthEast,
+            ::searchSouthWest
+        )
+        return searches.map { it.invoke() }.count { it }
     }
 //
 //        val l1 = left()
@@ -96,9 +118,7 @@ class A(position: Position, grid: Grid) : Letter(position, grid) {
 class S(position: Position, grid: Grid) : Letter(position, grid) {
     override val value = 'S'
     override val nextValue = '-'
-    override fun searchLeft(): Boolean {
-        return true
-    }
+    override fun search(direction: Letter.() -> Letter?): Boolean = true
 }
 
 data class Position(val row: Int, val col: Int)

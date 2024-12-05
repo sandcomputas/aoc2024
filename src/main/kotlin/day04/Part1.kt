@@ -2,7 +2,7 @@ package dev.sondre.day04
 
 import dev.sondre.Part
 
-abstract class Letter(position: Position, grid: Grid) : BaseLetter(position, grid){
+abstract class Letter(position: Position, grid: Grid1) : BaseLetter(position, grid){
 
     override fun search(direction: BaseLetter.() -> BaseLetter?): Boolean { // Receiver function does the trick!
         val d = this.direction()
@@ -22,7 +22,7 @@ abstract class Letter(position: Position, grid: Grid) : BaseLetter(position, gri
     fun searchSouthWest(): Boolean = search { this.southWest() }
 }
 
-class X(position: Position, grid: Grid) : Letter(position, grid) {
+class X(position: Position, grid: Grid1) : Letter(position, grid) {
     override val value = 'X'
     override val nextValue = 'M'
     override fun count(): Int {
@@ -40,17 +40,17 @@ class X(position: Position, grid: Grid) : Letter(position, grid) {
     }
 }
 
-class M(position: Position, grid: Grid) : Letter(position, grid) {
+class M(position: Position, grid: Grid1) : Letter(position, grid) {
     override val value = 'M'
     override val nextValue = 'A'
 }
 
-class A(position: Position, grid: Grid) : Letter(position, grid) {
+class A(position: Position, grid: Grid1) : Letter(position, grid) {
     override val value = 'A'
     override val nextValue = 'S'
 }
 
-class S(position: Position, grid: Grid) : Letter(position, grid) {
+class S(position: Position, grid: Grid1) : Letter(position, grid) {
     override val value = 'S'
     override val nextValue = '-'
     override fun search(direction: BaseLetter.() -> BaseLetter?): Boolean = true
@@ -60,6 +60,6 @@ data class Position(val row: Int, val col: Int)
 
 class Part1(expRes: Int? = null) : Part(expRes) {
     override fun solve(data: String): Int {
-        return Grid(data).flat().sumOf { it.count() }
+        return Grid1(data).flat().sumOf { it.count() }
     }
 }

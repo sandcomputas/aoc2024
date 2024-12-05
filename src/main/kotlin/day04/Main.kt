@@ -9,7 +9,8 @@ fun main() {
         listOf(
             Part1(18)
                 .withActual(2462),
-//            Part2(42)
+            Part2(9)
+                .withActual(1877)
         )
     )
     day.all()

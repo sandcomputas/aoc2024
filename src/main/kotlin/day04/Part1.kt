@@ -4,7 +4,7 @@ import dev.sondre.Part
 
 abstract class Letter(position: Position, grid: Grid) : BaseLetter(position, grid){
 
-    open fun search(direction: Letter.() -> Letter?): Boolean { // Receiver function does the trick!
+    override fun search(direction: BaseLetter.() -> BaseLetter?): Boolean { // Receiver function does the trick!
         val d = this.direction()
         if (d != null && d.value == nextValue) {
             return d.search(direction)
@@ -53,32 +53,10 @@ class A(position: Position, grid: Grid) : Letter(position, grid) {
 class S(position: Position, grid: Grid) : Letter(position, grid) {
     override val value = 'S'
     override val nextValue = '-'
-    override fun search(direction: Letter.() -> Letter?): Boolean = true
+    override fun search(direction: BaseLetter.() -> BaseLetter?): Boolean = true
 }
 
 data class Position(val row: Int, val col: Int)
-
-class Grid(raw: String) {
-    private val grid: List<List<Letter>> = raw
-        .lines()
-        .mapIndexed { indexRow, row ->
-            row.mapIndexed { indexColumn, char ->
-                val pos = Position(indexRow, indexColumn)
-                BaseLetter.from(char, pos, this)
-            }
-        }
-
-    operator fun get(x: Int, y: Int): Letter? {
-        try {
-            val l = grid[x][y]
-            return l
-        } catch (e: IndexOutOfBoundsException) {
-            return null
-        }
-    }
-
-    fun flat(): List<Letter> = grid.flatten()
-}
 
 class Part1(expRes: Int? = null) : Part(expRes) {
     override fun solve(data: String): Int {

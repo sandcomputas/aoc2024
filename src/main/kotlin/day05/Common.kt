@@ -1,7 +1,5 @@
 package dev.sondre.day05
 
-import dev.sondre.day03.Expression
-
 fun <T> List<T>.middle(): T {
     val mid = size.floorDiv(2)
     return this[mid]
@@ -47,8 +45,8 @@ class Update(val pages: List<Int>) {
         val comp = Comparator { f: Int, s: Int ->
             val rule = relevantRules.first { (f == it.first && s == it.second) || (s == it.first && f == it.second) }
             when (rule.first) {
-                f -> -1
-                s -> 1
+                f -> 1
+                s -> -1
                 else -> throw Exception("Invalid comparison, rule not matching page")
             }
         }

@@ -35,6 +35,7 @@ fun main() {
                 )
                 .withActual(617),
             Part2(81)
+                .withActual(1477)
         )
     )
     day.all()

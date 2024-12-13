@@ -12,6 +12,7 @@ abstract class BlockSpace {
                 EmptySpace()
             } else UsedSpace(s.toInt())
         }
+
         fun from(id: Int): UsedSpace {
             return UsedSpace(id)
         }
@@ -29,7 +30,7 @@ fun List<BlockSpace>.isCompacted(): Boolean {
     return true
 }
 
-fun compactDisk(disk: List<BlockSpace>): List<UsedSpace> {
+fun compactDisk(disk: List<BlockSpace>): List<BlockSpace> {
     if (disk.isCompacted()) return disk.map { it as UsedSpace }
     val last = disk.last()
     val firstAvailableSpaceIndex = disk.indexOfFirst { it is EmptySpace }
@@ -51,26 +52,17 @@ fun checkSum(disk: List<UsedSpace>): Long {
 class Part1(expRes: Int? = null) : Part(expRes) {
     override fun solve(data: String): Int {
         val (filesDiskMap, freeSpaceDiskMap) = data.chunked(2).map { Pair(it.first(), it.last()) }.unzip()
-        val filesBlock: List<Int> = filesDiskMap.mapIndexed { id, f ->
-            (0..f.toNumbericInt()).map { id }
-        }.flatten()
+        val filesBlock: List<List<BlockSpace>> = filesDiskMap.mapIndexed { id, f ->
+            (0 until f.toNumbericInt()).map { BlockSpace.from(id) }
+        }
         val freeSpaceBlock = freeSpaceDiskMap.mapIndexed { index, f ->
             // Do not need to render trailing empty disk space
             if (index == freeSpaceDiskMap.size - 1) "" else ".".repeat(f.toNumbericInt())
-        }
-//        val disku = (filesBlock zip freeSpaceBlock).joinToString("") { it.first + it.second }.toList()
-        val disk = (filesBlock zip freeSpaceBlock)
-            .flatMap {
-                listOf(
-                    BlockSpace.from(it.first),
-                    BlockSpace.from(it.second)
-                )
-            }
-        val compactedDisk = compactDisk(disk)
+        }.map { it.toCharArray().map { BlockSpace.from(it.toString()) } }
 
-        println("---------------------")
-        println(checkSum(compactedDisk))
-        println("---------------------")
-        return 1
+        val disk = (filesBlock zip freeSpaceBlock).map { listOf(it.first, it.second) }.flatten().flatten()
+        val compactedDisk = compactDisk(disk)
+        println(checkSum(compactedDisk.map { it as UsedSpace }))
+        return 0
     }
 }            
